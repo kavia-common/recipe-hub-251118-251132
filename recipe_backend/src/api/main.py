@@ -14,7 +14,7 @@ from sqlalchemy.orm import Session, selectinload
 from src.core.config import get_settings
 from src.core.database import get_db, init_db
 from src.core.security import create_access_token, decode_access_token, hash_password, verify_password
-from src.models import Favorite, ModerationReport, Recipe, ShoppingListItem, User
+from src.models import Category, Favorite, ModerationReport, Recipe, ShoppingListItem, User
 from src.schemas import (
     AuthLoginRequest,
     AuthRegisterRequest,
@@ -333,8 +333,8 @@ def list_recipes(
     if category:
         statement = statement.join(Recipe.category).where(
             or_(
-                func.lower(Recipe.category.has().comparator.property.entity.class_.label) == category.lower(),  # noqa: E501
-                func.lower(Recipe.category.has().comparator.property.entity.class_.slug) == category.lower(),  # noqa: E501
+                func.lower(Category.label) == category.lower(),
+                func.lower(Category.slug) == category.lower(),
             )
         )
 

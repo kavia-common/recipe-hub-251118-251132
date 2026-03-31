@@ -21,7 +21,10 @@ class Settings(BaseSettings):
 
     database_url: str = Field(
         default="sqlite+pysqlite:///./recipe_hub.db",
-        description="Database connection URL. Request a real DATABASE_URL from the user/orchestrator.",
+        description=(
+            "Database connection URL. For full-stack integration, request a real DATABASE_URL "
+            "that points to the recipe_db PostgreSQL container from the user/orchestrator."
+        ),
         alias="DATABASE_URL",
     )
     jwt_secret_key: str = Field(
